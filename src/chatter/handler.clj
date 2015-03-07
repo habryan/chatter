@@ -6,16 +6,22 @@
 
 (defn generate-message-view
   "This generates the HTML for displaying messages"
-  []
+  [messages]
   (page/html5
         [:head
          [:title "chatter"]]
         [:body
-         [:h1 "Our Chat App"]]))
+         [:h1 "Our Chat App"]
+         [:p messages]]))
 
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
+  (GET "/" [] (generate-message-view chat-messages))
   (route/not-found "Not Found"))
 
 (def app
   (wrap-defaults app-routes site-defaults))
+
+(def chat-messages [{:name "blue" :message "hello, world"}
+                    {:name "red" :message "red is my favorite color"}
+                    {:name "green" :message "green names it go faster}])
+
