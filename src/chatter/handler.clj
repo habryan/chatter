@@ -17,9 +17,6 @@
 (defn destroy []
   (println "chatter is shutting down"))
 
-(defn -main [& [port]]
-  (let [port (Integer. (or port (env :port) 5000))]
-    (jetty/run-jetty #'app {:port port :join? false})))
 
 (defn generate-message-view
   "This generates the HTML for displaying messages"
@@ -58,7 +55,10 @@
   (route/resources "/")
   (route/not-found "Not Found"))
 
+
 (def app (wrap-params app-routes))
 
-
+(defn -main [& [port]]
+  (let [port (Integer. (or port (env :port) 5000))]
+    (jetty/run-jetty #'app {:port port :join? false})))
 
